@@ -1,0 +1,23 @@
+[project]
+name = "bizdurr"
+version = "1.0.0"
+description = "A lightweight, flexible business duration calculator."
+readme = "README.md"
+authors = [
+    { name = "clrk", email = "patrick.cl@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = []
+
+[project.scripts]
+bizdurr = "bizdurr:main"
+
+[build-system]
+requires = ["uv_build>=0.8.22,<0.9.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "coverage==7.12.0",
+    "pytest==9.0.2",
+]
