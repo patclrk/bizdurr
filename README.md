@@ -55,6 +55,7 @@ end   = datetime(2025, 12, 8, 18, 0)  # Monday 6:00 PM
 
 duration = bd.calculate(start, end)
 print(duration)  # 8:00:00 (8 hours of business time)
+type(duration)  # <class 'datetime.timedelta'>
 ```
 
 ---
@@ -75,7 +76,7 @@ schedule = {
 
 ### Shorthand Schedule (Monday–Friday)
 
-For a typical 9-to-5 Monday through Friday schedule, use the shorthand format:
+For a fixed Monday through Friday schedule, use the shorthand format:
 
 ```python
 bd = BusinessDuration(
@@ -107,7 +108,8 @@ bd = BusinessDuration(
     business_hours=schedule,
     timezone="America/New_York",
     overrides={
-        "2025-12-24": {"start": "09:00", "end": "12:00"},  # Christmas Eve: half day
+        # Christmas Eve: half day
+        "2025-12-24": {"start": "09:00", "end": "12:00"},
     },
 )
 ```
