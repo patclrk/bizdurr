@@ -1,13 +1,25 @@
 [project]
 name = "bizdurr"
-version = "1.0.0"
+version = "1.0.1"
 description = "A lightweight, flexible business duration calculator."
 readme = "README.md"
 authors = [
     { name = "clrk", email = "patrick.cl@gmail.com" }
 ]
-requires-python = ">=3.13"
+requires-python = ">=3.9"
 keywords = ["business", "duration", "business duration", "business hours", "business schedule"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 dependencies = []
 
 [project.scripts]
