@@ -7,10 +7,16 @@ authors = [
     { name = "clrk", email = "patrick.cl@gmail.com" }
 ]
 requires-python = ">=3.13"
+keywords = ["business", "duration", "business duration", "business hours", "business schedule"]
 dependencies = []
 
 [project.scripts]
 bizdurr = "bizdurr:main"
+
+[project.urls]
+Homepage = "https://github.com/patclrk/bizdurr"
+Repository = "https://github.com/patclrk/bizdurr"
+Issues = "https://github.com/patclrk/bizdurr/issues"
 
 [build-system]
 requires = ["uv_build>=0.8.22,<0.9.0"]

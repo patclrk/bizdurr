@@ -1,5 +1,10 @@
 # bizdurr
 
+[![Tests](https://github.com/patclrk/bizdurr/actions/workflows/tests.yml/badge.svg)](https://github.com/patclrk/bizdurr/actions/workflows/tests.yml)
+[![PyPI version](https://img.shields.io/pypi/v/bizdurr.svg)](https://pypi.org/project/bizdurr/)
+[![Python versions](https://img.shields.io/pypi/pyversions/bizdurr.svg)](https://pypi.org/project/bizdurr/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ### A lightweight, flexible business duration calculator
 
 Calculate the amount of time that falls within your defined business hours — accounting for weekly schedules, holidays, and per-date overrides.
