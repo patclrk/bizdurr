@@ -25,7 +25,9 @@ class BusinessDuration:
     Args:
         business_hours: Weekly schedule as a BusinessHours object or a dict
             mapping weekday names to {'start': 'HH:MM', 'end': 'HH:MM'}.
-        timezone: IANA timezone string (e.g., 'America/New_York') or ZoneInfo object.
+        business_timezone: IANA timezone string (e.g., 'America/New_York') or
+            ZoneInfo object. This specifies where the business is located and
+            determines how business hours are interpreted.
         holidays: Optional list of dates when the business is closed.
             Can be date objects or ISO date strings ('YYYY-MM-DD').
         overrides: Optional per-date schedule overrides as a BusinessHoursOverrides
@@ -33,7 +35,7 @@ class BusinessDuration:
 
     Raises:
         TypeError: If business_hours or overrides are invalid types.
-        ValueError: If timezone is invalid or holiday dates are malformed.
+        ValueError: If business_timezone is invalid or holiday dates are malformed.
 
     Example:
         >>> duration = BusinessDuration(
@@ -41,7 +43,7 @@ class BusinessDuration:
         ...         "monday": {"start": "09:00", "end": "17:00"},
         ...         "tuesday": {"start": "09:00", "end": "17:00"},
         ...     },
-        ...     timezone="America/New_York",
+        ...     business_timezone="America/New_York",
         ...     holidays=["2025-12-25"],
         ... )
         >>> duration.calculate(
@@ -52,7 +54,7 @@ class BusinessDuration:
     """
 
     business_hours: Union[BusinessHours, Dict[str, Dict[str, str]]]
-    timezone: Union[str, ZoneInfo]
+    business_timezone: Union[str, ZoneInfo]
     holidays: Optional[List[Union[date, str]]] = None
     overrides: Optional[Union[BusinessHoursOverrides, Dict[str, Dict[str, str]]]] = None
 
@@ -66,8 +68,8 @@ class BusinessDuration:
 
     def __post_init__(self):
         """Validate and normalize all inputs."""
-        self._tz = resolve_timezone(self.timezone)
-        self.timezone = self._tz  # Store as ZoneInfo for consistency
+        self._tz = resolve_timezone(self.business_timezone)
+        self.business_timezone = self._tz  # Store as ZoneInfo for consistency
 
         self._convert_business_hours_if_needed()
         self._convert_overrides_if_needed()

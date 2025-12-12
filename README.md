@@ -51,7 +51,7 @@ schedule = {
 # Create a BusinessDuration instance
 bd = BusinessDuration(
     business_hours=schedule,
-    timezone="America/New_York",
+    business_timezone="America/New_York",
 )
 
 # Calculate the business duration between two datetimes
@@ -86,7 +86,7 @@ For a fixed Monday through Friday schedule, use the shorthand format:
 ```python
 bd = BusinessDuration(
     business_hours={"start": "09:00", "end": "17:00"},  # Expands to Mon-Fri
-    timezone="America/New_York",
+    business_timezone="America/New_York",
 )
 ```
 
@@ -99,7 +99,7 @@ Exclude specific dates from business hours:
 ```python
 bd = BusinessDuration(
     business_hours=schedule,
-    timezone="America/New_York",
+    business_timezone="America/New_York",
     holidays=["2025-12-25", "2026-01-01"],  # ISO date strings or date objects
 )
 ```
@@ -111,7 +111,7 @@ Override business hours for specific dates (e.g., early close):
 ```python
 bd = BusinessDuration(
     business_hours=schedule,
-    timezone="America/New_York",
+    business_timezone="America/New_York",
     overrides={
         # Christmas Eve: half day
         "2025-12-24": {"start": "09:00", "end": "12:00"},
@@ -119,12 +119,38 @@ bd = BusinessDuration(
 )
 ```
 
-### Timezone Support
+### Timezone Handling
 
-All times are interpreted in the specified IANA timezone:
+The `business_timezone` parameter specifies **where the business is located**. All business hours are interpreted in this timezone, and all calculations are performed relative to it.
+
 ```python
+from datetime import datetime
+from zoneinfo import ZoneInfo
+from bizdurr import BusinessDuration
+
+# Business is located in New York
 bd = BusinessDuration(
-    business_hours=schedule,
-    timezone="Europe/London",
+    business_hours={"start": "09:00", "end": "17:00"},
+    business_timezone="America/New_York",
 )
+
+# 1. Naive datetimes are assumed to be in the business timezone
+bd.calculate(
+    datetime(2025, 12, 8, 10, 0),
+    datetime(2025, 12, 8, 15, 0)
+)  # 5 hours
+
+# 2. Aware datetimes in the same timezone work as expected
+eastern = ZoneInfo("America/New_York")
+bd.calculate(
+    datetime(2025, 12, 8, 10, 0, tzinfo=eastern),
+    datetime(2025, 12, 8, 15, 0, tzinfo=eastern)
+)  # 5 hours
+
+# 3. Aware datetimes in different timezones are converted automatically
+pacific = ZoneInfo("America/Los_Angeles")
+bd.calculate(
+    datetime(2025, 12, 8, 7, 0, tzinfo=pacific),   # 7 AM Pacific = 10 AM Eastern
+    datetime(2025, 12, 8, 12, 0, tzinfo=pacific)   # 12 PM Pacific = 3 PM Eastern
+)  # 5 hours
 ```
