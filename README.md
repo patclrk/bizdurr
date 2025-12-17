@@ -2,7 +2,7 @@
 
 [![Tests](https://github.com/patclrk/bizdurr/actions/workflows/tests.yml/badge.svg)](https://github.com/patclrk/bizdurr/actions/workflows/tests.yml)
 [![PyPI version](https://img.shields.io/pypi/v/bizdurr.svg)](https://pypi.org/project/bizdurr/)
-[![PyPI - Downloads](https://img.shields.io/pypi/dm/python-cq.svg?color=blue)](https://pypistats.org/packages/bizdurr)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/bizdurr.svg?color=blue)](https://pypistats.org/packages/bizdurr)
 [![Python versions](https://img.shields.io/pypi/pyversions/bizdurr.svg)](https://pypi.org/project/bizdurr/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
