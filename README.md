@@ -66,6 +66,59 @@ type(duration)  # <class 'datetime.timedelta'>
 
 ---
 
+## In a DataFrame
+
+```python
+from datetime import datetime
+import polars as pl
+from bizdurr import BusinessDuration
+
+# Set up business hours
+bd = BusinessDuration(
+    business_hours={"start": "09:00", "end": "17:00"},
+    business_timezone="America/New_York",
+)
+
+# Create a dataframe with start and end timestamps
+df = pl.DataFrame({
+    "ticket_id": [1, 2, 3, 4],
+    "start_time": [
+        datetime(2025, 12, 8, 9, 0),   # Monday 9:00 AM
+        datetime(2025, 12, 8, 16, 0),  # Monday 4:00 PM
+        datetime(2025, 12, 9, 10, 0),  # Tuesday 10:00 AM
+        datetime(2025, 12, 12, 11, 0), # Friday 11:00 AM
+    ],
+    "end_time": [
+        datetime(2025, 12, 8, 12, 0),  # Monday 12:00 PM
+        datetime(2025, 12, 9, 10, 0),  # Tuesday 10:00 AM
+        datetime(2025, 12, 9, 15, 0),  # Tuesday 3:00 PM
+        datetime(2025, 12, 12, 17, 0), # Friday 5:00 PM
+    ],
+})
+
+# Calculate business duration for each row
+df_with_duration = df.with_columns(
+    business_duration=pl.struct("start_time", "end_time").map_elements(
+        lambda row: bd.calculate(row["start_time"], row["end_time"])
+    )
+)
+
+print(df_with_duration)
+# Output:
+# ┌───────────┬─────────────────────┬─────────────────────┬──────────────────┐
+# │ ticket_id ┆ start_time          ┆ end_time            ┆ business_duration│
+# │ ---       ┆ ---                 ┆ ---                 ┆ ---              │
+# │ i64       ┆ datetime[μs]        ┆ datetime[μs]        ┆ duration[μs]     │
+# ╞═══════════╪═════════════════════╪═════════════════════╪══════════════════╡
+# │ 1         ┆ 2025-12-08 09:00:00 ┆ 2025-12-08 12:00:00 ┆ 3h               │
+# │ 2         ┆ 2025-12-08 16:00:00 ┆ 2025-12-09 10:00:00 ┆ 2h               │
+# │ 3         ┆ 2025-12-09 10:00:00 ┆ 2025-12-09 15:00:00 ┆ 5h               │
+# │ 4         ┆ 2025-12-12 11:00:00 ┆ 2025-12-12 17:00:00 ┆ 6h               │
+# └───────────┴─────────────────────┴─────────────────────┴──────────────────┘
+```
+
+---
+
 ## Features
 
 ### Weekly Schedule
