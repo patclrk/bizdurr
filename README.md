@@ -4,6 +4,7 @@
 [![PyPI version](https://img.shields.io/pypi/v/bizdurr.svg)](https://pypi.org/project/bizdurr/)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/bizdurr.svg?color=blue)](https://pypistats.org/packages/bizdurr)
 [![Python versions](https://img.shields.io/pypi/pyversions/bizdurr.svg)](https://pypi.org/project/bizdurr/)
+[![Tested on Python 3.15](https://img.shields.io/badge/tested%20on-Python%203.15-3776AB?logo=python&logoColor=white)](https://github.com/patclrk/bizdurr/actions/workflows/tests.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ### A lightweight, flexible business duration calculator
